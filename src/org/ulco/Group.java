@@ -40,7 +40,6 @@ public class Group {
 
     public Group copy() {
         Group g = new Group();
-
         for (Object o : m_objectList) {
             GraphicsObject element = (GraphicsObject) (o);
 
@@ -51,6 +50,7 @@ public class Group {
 
             g.addGroup(element.copy());
         }
+
         return g;
     }
 
