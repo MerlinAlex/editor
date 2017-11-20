@@ -37,6 +37,8 @@ public class Circle extends GraphicsObject {
         return "circle[" + m_center.toString() + "," + m_radius + "]";
     }
 
+
+
     private final Point m_center;
     private final double m_radius;
 }

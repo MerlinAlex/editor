@@ -39,6 +39,8 @@ public class Square extends GraphicsObject {
         return "square[" + m_origin.toString() + "," + m_length + "]";
     }
 
+
+
     private final Point m_origin;
     private final double m_length;
 }
