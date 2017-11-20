@@ -9,12 +9,18 @@ public class Layer {
     }
 
     public Layer(String json) {
-        m_list= new Vector<GraphicsObject>();
-        String str = json.replaceAll("\\s+","");
+        m_list = new Vector<GraphicsObject>();
+        String str = json.replaceAll("\\s+", "");
         int objectsIndex = str.indexOf("objects");
+        int groupsIndex = str.indexOf("groups");
         int endIndex = str.lastIndexOf("}");
 
-        parseObjects(str.substring(objectsIndex + 9, endIndex - 1));
+        if (groupsIndex > 0) {
+            parseObjects(str.substring(objectsIndex + 9, groupsIndex - 2));
+            parseGroups(str.substring(groupsIndex + 8, endIndex - 1));
+        } else {
+            parseObjects(str.substring(objectsIndex + 9, endIndex - 1));
+        }
     }
 
     public void add(GraphicsObject o) {
@@ -48,6 +54,25 @@ public class Layer {
                 objectsStr = "";
             } else {
                 objectsStr = objectsStr.substring(separatorIndex + 1);
+            }
+        }
+    }
+
+    private void parseGroups(String groupsStr) {
+        while (!groupsStr.isEmpty()) {
+            int separatorIndex = searchSeparator(groupsStr);
+            String objectStr;
+
+            if (separatorIndex == -1) {
+                objectStr = groupsStr;
+            } else {
+                objectStr = groupsStr.substring(0, separatorIndex);
+            }
+            m_list.add(JSON.parse(objectStr));
+            if (separatorIndex == -1) {
+                groupsStr = "";
+            } else {
+                groupsStr = groupsStr.substring(separatorIndex + 1);
             }
         }
     }
