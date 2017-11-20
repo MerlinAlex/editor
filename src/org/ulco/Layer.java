@@ -61,14 +61,14 @@ public class Layer {
     private void parseGroups(String groupsStr) {
         while (!groupsStr.isEmpty()) {
             int separatorIndex = searchSeparator(groupsStr);
-            String objectStr;
+            String groupStr;
 
             if (separatorIndex == -1) {
-                objectStr = groupsStr;
+                groupStr = groupsStr;
             } else {
-                objectStr = groupsStr.substring(0, separatorIndex);
+                groupStr = groupsStr.substring(0, separatorIndex);
             }
-            m_list.add(JSON.parse(objectStr));
+            m_list.add(JSON.parseGroup(groupStr));
             if (separatorIndex == -1) {
                 groupsStr = "";
             } else {
